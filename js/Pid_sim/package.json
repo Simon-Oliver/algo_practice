@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@mariusrumpf/pid-controller": "^1.0.0",
+    "asciichart": "^1.5.25",
     "node-pid-controller": "^1.0.1"
   }
 }
