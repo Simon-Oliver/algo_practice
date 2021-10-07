@@ -11,6 +11,7 @@
   "dependencies": {
     "@mariusrumpf/pid-controller": "^1.0.0",
     "asciichart": "^1.5.25",
+    "chart.js": "^3.5.1",
     "node-pid-controller": "^1.0.1"
   }
 }

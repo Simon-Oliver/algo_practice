@@ -1,0 +1,52 @@
+<div height="100vh" width="100vw">
+  <canvas id="myChart" width="800" height="500"></canvas>
+</div>
+<script src="./node_modules/chart.js/dist/chart.js"></script>
+<script type="module" src="./temp.mjs"></script>
+<script>
+  var ctx = document.getElementById("myChart");
+
+  setInterval(() => {
+    console.log(sim.dataSet)
+  }, 1000);
+
+
+  var new_Data;
+  var new_labels;
+
+  var myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [
+        {
+          label: ""
+          data: [],
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      responsive: false,
+      plugins: {
+        legend: true, // Hide legend
+      },
+      scales: {
+        y: {
+          display: true, // Hide Y axis labels
+        },
+        x: {
+          display: false, // Hide X axis labels
+        },
+      },
+    },
+  });
+</script>

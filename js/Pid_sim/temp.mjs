@@ -1,4 +1,4 @@
-import Controller from "node-pid-controller";
+//import Controller from "node-pid-controller";
 import { PIDController } from "@mariusrumpf/pid-controller";
 import asciichart from "asciichart";
 
@@ -42,6 +42,7 @@ class Sim {
     this.startTime = Date.now();
     this.length = length;
     this.stopFunc = stopFunc;
+    this.dataSet = {};
   }
   Start = () => {
     console.log("Future", this.startTime + this.length);
@@ -62,17 +63,21 @@ class Sim {
     clearInterval(this.interval_id);
     console.log("Stopped");
   };
+
+  SetData = (data) => {
+    this.dataSet = data;
+  };
 }
 
 const tank = new Tank(5, 31);
 const tankHeater = new Heater(tank, 2);
 const env = new Env(tank, 5);
-const ctr = new Controller({
-  k_p: 0.25,
-  k_i: 0.01,
-  k_d: 0.01,
-  dt: 1,
-});
+// const ctr = new Controller({
+//   k_p: 0.25,
+//   k_i: 0.01,
+//   k_d: 0.01,
+//   dt: 1,
+// });
 
 const controller = new PIDController({
   p: 10000,
@@ -122,11 +127,13 @@ ctr.setTarget(500);
 //   else digitalWrite(RelayPin,LOW);
 
 // }
+
 let windowStartTime = Date.now();
 let count = 0;
 let on = false;
 const windowSize = 10000;
 let temps = [];
+let times = [];
 var config = {
   offset: 3, // axis offset from the left (min 2)
   padding: "       ", // padding string for label formatting (can be overrided)
@@ -140,13 +147,16 @@ const stop = () => {
 const log = () => {
   let output = tank.temp; //this can be a function you use to get temperature from a hardware sensor or API
   // let input = ctr.update(output);
-  if (temps.length < 100) {
-    temps.push(output);
-  } else {
-    temps.shift();
-    temps.push(output);
-  }
-  console.log(asciichart.plot(temps, config), "\r");
+  temps.push(output);
+  times.push(Date.now());
+
+  // if (temps.length < 100) {
+  //   temps.push(output);
+  // } else {
+  //   temps.shift();
+  //   temps.push(output);
+  // }
+  // console.log(asciichart.plot(temps, config), "\r");
 
   let input = controller.update(output);
 
@@ -191,7 +201,8 @@ const log = () => {
   // env.Effect();
   // console.log("After ENv", tank.temp);
   // console.log("Time ---- ", timeNow);
+  sim.SetData({ data: temps, labels: times });
+  console.log(sim.dataSet);
 };
 
 const sim = new Sim(1000, 600000, log, stop);
-sim.Start();
