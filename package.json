@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@abandonware/noble": "^1.9.2-14",
+    "node-gyp": "^8.2.0"
+  }
+}
