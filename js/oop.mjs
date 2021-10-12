@@ -1,18 +1,16 @@
-import fs from "fs";
-
-class Logger {
-  constructor(func) {
-    this.func = func;
-  }
-  Log(path, data) {
-    fs.writeFile(path, data, () => console.log("File Saved"));
-    this.func();
-  }
+class TempSensor {
+  get = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(Math.random() * 10);
+      }, 900);
+    });
+  };
 }
 
-const log1 = new Logger(() => console.log("Saved"));
+const sense1 = new TempSensor();
 
-log1.Log(
-  "./data.txt",
-  JSON.stringify({ test: "Hello World", data1: "Hello World 2" })
-);
+setInterval(async () => {
+  let temp = await sense1.get();
+  console.log(temp);
+}, 100);
