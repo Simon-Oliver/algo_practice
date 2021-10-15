@@ -1,16 +1,13 @@
 class TempSensor {
-  get = () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(Math.random() * 10);
-      }, 900);
-    });
+  get = async (delay = 1000) => {
+    const delayPromise = (ms) => new Promise((res) => setTimeout(res, ms));
+    await delayPromise(delay);
+
+    return Math.random() * 10;
   };
 }
 
 const sense1 = new TempSensor();
 
-setInterval(async () => {
-  let temp = await sense1.get();
-  console.log(temp);
-}, 100);
+let temp = await sense1.get();
+console.log(temp);
