@@ -5,7 +5,6 @@ class Logger():
 
 class Printer():
     def __init__(self, data):
-        print("--------",data)
-
+        print("---",data)
 
 p = Printer({"name":"test"})
