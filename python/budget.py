@@ -10,7 +10,7 @@ class Budget():
             self.budget = init_budget
 
     def deposit(self,amount, desc=""):
-        self.ledger.append({"amount":amount,"description":desc})
+        self.ledger.append({"amount":round(amount,2),"description":desc})
 
     def get_balance(self):
         balance = 0
@@ -51,13 +51,14 @@ class Budget():
         return new_str
         
 
-food = Budget('Food',5000.548)
+food = Budget('Food',500.548)
 food.deposit(800,'Pay')
 bills = Budget('Bills')
 
 # print(food.get_balance())
 # print(food.withdraw(50,"Shopping"))
-food.transfer(1000,bills)
-print("Food",food.ledger)
+# print("Has transfered: ",food.transfer(1300.55,bills))
+# print("Food",food.ledger)
 print("Bills",bills.ledger)
 print(food)
+print(bills)
