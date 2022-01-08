@@ -3,7 +3,8 @@ import sqlite3
 con = sqlite3.connect("../chinook.db")
 cur = con.cursor()
 
-cur.execute('''
+cur.execute(
+    """
 INSERT INTO employees(
    LastName,
    FirstName,
@@ -13,20 +14,23 @@ INSERT INTO employees(
     "Max",
     "Australia"
     ) 
-''')
+"""
+)
 
-cur.execute('''
+cur.execute(
+    """
 SELECT 
     country, COUNT(Country)
 FROM 
     employees
 GROUP By country
-''')
+"""
+)
 
 # cur.execute('''
-# SELECT 
+# SELECT
 #     *
-# FROM 
+# FROM
 #     employees
 # ''')
 
