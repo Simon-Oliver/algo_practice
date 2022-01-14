@@ -1,15 +1,27 @@
 from faker import Faker
 import sqlite3
+import uuid
+import math
+
 
 con = sqlite3.connect("./testDB.db")
 cur = con.cursor()
+
+
+# def execute_query(connection, query):
+#     cur = connection.cursor()
+#     try:
+#         print("I'm working")
+
+#     except Error as err:
+#         print(f"Error: {err}")
 
 
 def create_table():
     cur.execute(
         """
     CREATE TABLE CLIENT(
-        client_id INTEGER PRIMARY KEY,
+        client_id BLOB(32) PRIMARY KEY,
         first_name TEXT NOT NULL,
         last_name TEXT NOT NULL,
         dob DATE NOT NULL,
@@ -38,7 +50,38 @@ def create_property():
     property["value"] = faker
 
 
-for p in range(0, 20):
-    create_person()
+def add_client(client_id, f_name, l_name, dob, phone):
+    cur.execute(
+        """
+        INSERT INTO client VALUES (?,?,?,?,?)
+    """,
+        (client_id, f_name, l_name, dob, phone),
+    )
+    con.commit()
 
-create_table()
+
+# create_table()
+
+
+def create_clients(amount):
+    for n in range(0, amount):
+        add_client(
+            uuid.uuid4().hex,
+            faker.first_name(),
+            faker.last_name(),
+            faker.date_of_birth(minimum_age=18),
+            faker.phone_number(),
+        )
+        per = math.floor((100 / amount) * n)
+        print(per, end="\r")
+
+
+create_clients(10000)
+
+# Shrinks the DB after making space e.g dropping a table
+def vacuum():
+    cur.execute("VACUUM")
+    con.close()
+
+
+vacuum()
