@@ -4,16 +4,23 @@ from os import system
 con = sqlite3.connect("../chinook.db")
 cur = con.cursor()
 
-menu = {1: "Search by CustomerId", 2: "Search by LastName", 3: "Search by Email"}
+menu = {1: "Search by CustomerId", 2: "Search by LastName", 3: "Search by Email", 4: "Exit"}
 
 
 def search_CustomerId():
+    system('clear')
     search = input("Enter CustomerId: ")
     cur.execute(f"SELECT LastName from customers WHERE CustomerId = {search}")
     res = cur.fetchall()
-    print(res[0][0])
+    print(f'''
+    ----------------------------
+    Customer Found:
+    Last Name: {res[0][0]}
+    ----------------------------
+    ''')
 
 def create_menu():
+    system('clear')
     for key in menu.keys():
         print(f"{key} - {menu[key]}")
     option = int(input("Select search: "))
@@ -21,6 +28,8 @@ def create_menu():
         case 1:
             search_CustomerId()
             create_back(search_CustomerId)
+        case 4:
+            exit()
 
 def create_back(searchFunction):
     print(f'''
