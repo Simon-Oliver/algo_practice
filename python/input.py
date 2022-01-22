@@ -18,6 +18,34 @@ def search_CustomerId():
     Last Name: {res[0][0]}
     ----------------------------
     ''')
+    show_invoices(search)
+
+# refactor the above and the below function to follow DRY
+def search_CustomerEmail():
+    system("clear")
+    search = str(input("Enter customer email address: "))
+    cur.execute(f"SELECT LastName from customers WHERE Email = '{search}'")
+    res = cur.fetchall()
+    print(f'''
+       ----------------------------
+       Customer Found:
+       Last Name: {res[0][0]}
+       ----------------------------
+       ''')
+
+def show_invoices(CustomerId):
+    cur.execute(f"""
+    SELECT Total, InvoiceId, InvoiceDate from invoices WHERE CustomerId = {CustomerId}
+    """)
+    res = cur.fetchall()
+    print(f"{len(res)} invoices found:")
+    for invoice in res:
+        print(f"""
+        InvoiceId: {invoice[1]}
+        Invoice date: {invoice[2]}
+        Total: {invoice[0]}
+        """)
+
 
 def create_menu():
     system('clear')
@@ -28,6 +56,9 @@ def create_menu():
         case 1:
             search_CustomerId()
             create_back(search_CustomerId)
+        case 3:
+            search_CustomerEmail()
+            create_back(search_CustomerEmail)
         case 4:
             exit()
 
