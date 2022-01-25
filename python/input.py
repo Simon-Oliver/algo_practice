@@ -77,8 +77,6 @@ def create_back(searchFunction):
 
 def run():
     create_menu()
-    
-
 
 run()
 
