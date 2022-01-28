@@ -68,8 +68,15 @@ root.grid_rowconfigure(0,weight=1)
 
 
 frame_R.grid(column=1,row=0,sticky="nsew")
+frame_R.grid_columnconfigure(1, weight=1)
+frame_R.grid_rowconfigure(1, weight=1)
 
-btn = Button(frame_R,text='Hide Left Menu', command=hide)
-btn.pack()
+canvas = Canvas(frame_R, width=289, height=289)
+canvas.grid(column=1, row=1)
+img = PhotoImage(file="./image/helloworld.png")
+canvas.create_image(0,0, anchor=NW, image=img)
+
+btn = Button(frame_R,text='Hide Left Menu', command=hide, highlightbackground='#a5a58d')
+btn.grid(column=1, row=0,pady=100,padx=100)
 
 root.mainloop()
