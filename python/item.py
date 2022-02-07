@@ -11,7 +11,7 @@ class Item:
         assert quantity >= 0, f"Price {price} can't be less than 0."
         # Double underscore makes the attribute private, so it can't be changed after instantiating the instance.
         self.__name = name
-        self.price = price
+        self.__price = price
         self.quantity = quantity
         self.total_price = self.calculate_total_price()
 
@@ -30,19 +30,30 @@ class Item:
     def name(self, newName):
         self.__name = newName
 
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self,value):
+        if value < 0:
+            raise Exception("Value needs to be 0 or larger.")
+        else:
+            self.__price = value
+
     def calculate_total_price(self):
         return self.quantity * self.price
 
     def apply_discount(self):
         # Revering to self.pay_rate will make sure the instance pay rate
         # is used when applied specifically to an instance
-        self.price = self.price * self.pay_rate
+        self.__price = self.__price * self.pay_rate
 
     def remove_discount(self):
-        self.price = self.price / self.pay_rate
+        self.__price = self.__price / self.pay_rate
 
     def __repr__(self):
-        return f'{self.__class__.__name__}("{self.name}",{self.price},{self.quantity})'
+        return f'{self.__class__.__name__}("{self.name}",{self.__price},{self.quantity})'
 
     @staticmethod
     def check_if_is_integer(num):
