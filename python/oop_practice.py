@@ -5,8 +5,12 @@ class Vehicle:
         self.milage = milage
 
 class Bus(Vehicle):
-    pass
+    def __init__(self, name,max_speed,milage, capacity):
+        super().__init__(name,max_speed,milage)
+        self.__capacity = capacity
+    def get_capacity(self):
+        return self.__capacity
 
-bus = Bus("School volvo",250,80)
+bus = Bus("School volvo",250,80,45)
 
-print(bus.milage)
+print(bus.get_capacity())
